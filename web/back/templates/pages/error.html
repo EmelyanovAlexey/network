@@ -1,0 +1,18 @@
+{% extends 'templates.html' %} 
+
+{% block title %} 
+Ошибка
+{% endblock %} 
+
+{% block body %}
+<div class="error_block">
+    <div class="error_block__title">
+        Ошибка
+    </div>
+    
+    <div class="error_block__description">
+        {{ error }}
+    </div>
+    <a href="/form" class="btn error_block__btn">Назад</a>
+</div>
+{% endblock %}

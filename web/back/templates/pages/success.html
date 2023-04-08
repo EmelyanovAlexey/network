@@ -1,0 +1,36 @@
+{% extends 'templates.html' %} 
+
+{% block title %} 
+Успешно
+{% endblock %} 
+
+{% block body %}
+<div class="success_block">
+    <div class="success_block__title">
+        Успешно
+    </div>
+    
+    <div class="success_block__description">
+        Парсер был успешно закончен, желаете скачать результат?
+    </div>
+    <div class="footer">
+        <a href="/form" class="btn success_block__btn-o">Назад</a>
+        <a href="{{ url_for('static', filename='data/products.csv') }}" download="filename" class="btn success_block__btn">Скачать</a>
+    </div>
+</div>
+
+
+
+<div class="catalog">
+
+    {% for el in productList %}
+
+    <div class="product">
+        <div class="product_name">
+            {{ el[0] }}
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

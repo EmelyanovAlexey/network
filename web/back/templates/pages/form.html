@@ -1,0 +1,27 @@
+{% extends 'templates.html' %} 
+
+{% block title %} 
+Форма
+{% endblock %} 
+
+{% block body %}
+<div class="block">
+    <div class="block-form">
+        <form method="POST">
+            <h2 class="title_form">Форма</h2>
+            <div class="input_block">
+                <input type="text" name="url" id="url" required="required" />
+                <span>Ссылка</span>
+                <i></i>
+            </div>
+
+            <div class="block-form__footer">
+
+                <button class="btn">
+                    Парсинг
+                </button> 
+            </div>
+        </form>
+    </div> 
+</div>
+{% endblock %}
