@@ -10,7 +10,7 @@ import numpy as np
 
 # переменные
 errorPage = ''
-productList = []
+product_list = []
 
 # классы
 
@@ -31,7 +31,7 @@ class ProductClass:
 
 def get_production_catalog(driver) -> list[ProductClass]:
     print("See Catalog .....")
-    productList = []
+    product_list = []
     products = driver.find_elements(By.CLASS_NAME, "catalog-product")
     for product in products:
         time.sleep(0.1)
@@ -46,16 +46,16 @@ def get_production_catalog(driver) -> list[ProductClass]:
             By.CLASS_NAME, "product-buy__price").text
         name = product.find_element(
             By.CLASS_NAME, "catalog-product__name span").text
-        productList.append(ProductClass(name, price, "", link))
+        product_list.append(ProductClass(name, price, "", link))
     time.sleep(1.5)
-    return productList
+    return product_list
 
 # сбор описания
 
 
-def get_description(driver, productList: list[ProductClass]) -> list[ProductClass]:
+def get_description(driver, product_list: list[ProductClass]) -> list[ProductClass]:
     print("Get Description .....")
-    for product in productList:
+    for product in product_list:
         description = ""
         driver.get(url=product.link)
         time.sleep(1.5)
@@ -64,18 +64,18 @@ def get_description(driver, productList: list[ProductClass]) -> list[ProductClas
         description = teg_text_description.text
         description = teg_text_description.text
         product.description = description
-    return productList
+    return product_list
 
 # сохраняем полученные данные
 
 
-def save_products(productList):
+def save_products(product_list):
     print("сохранить")
     with open('back/static/data/products.csv', mode="w", encoding='utf-8') as csvfile:
         file_writer = csv.writer(
             csvfile, delimiter="||", lineterminator="\r")
         file_writer.writerow(['name', 'price', 'description'])
-        for product_item in productList:
+        for product_item in product_list:
             file_writer.writerow(
                 [product_item.name, product_item.price, product_item.description])
 
@@ -91,9 +91,9 @@ def parser_html(urlCatalog):
     try:
         driver.get(url=urlCatalog)
         time.sleep(3)
-        productList = get_production_catalog(driver)
-        get_description(driver, productList)
-        save_products(productList)
+        product_list = get_production_catalog(driver)
+        get_description(driver, product_list)
+        save_products(product_list)
         print('успешно')
 
     except Ellipsis as _ex:
@@ -124,7 +124,7 @@ def success():
     with open('back/static/data/products.csv', mode="r", encoding='utf-8') as csvfile:
         data = list(csv.reader(csvfile, delimiter='\t'))
     
-    return render_template("./pages/success.html", productList=data)
+    return render_template("./pages/success.html", product_list=data)
 
 
 @app.route('/form', methods=['POST', 'GET'])
